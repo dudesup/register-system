@@ -18,7 +18,6 @@ public class CarsController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void create(@RequestBody Car car){
-        carList().add(new Car());
     }
     @GetMapping("/{id}")
     public Car getCarById(@PathVariable("id") long id){
