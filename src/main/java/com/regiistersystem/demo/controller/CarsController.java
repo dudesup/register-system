@@ -21,7 +21,7 @@ public class CarsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void create(@RequestBody Car car) {
+    public void createCar(@RequestBody Car car) {
         carRepository.save(car);
     }
 
@@ -29,5 +29,25 @@ public class CarsController {
     public Car getCarById(@PathVariable("id") long id) {
         return carRepository.getById(id);
 
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updateCar(@RequestBody Car car){
+        Car carFromDB = carRepository.findById(car.getId()).orElseThrow(NullPointerException::new);
+        carRepository.save(car);
+        carFromDB.setEmail(car.getEmail());
+        carFromDB.setPhone(car.getPhone());
+        carFromDB.setModel(car.getModel());
+        carFromDB.setVin(car.getVin());
+        carFromDB.setPurchaseDate(car.getPurchaseDate());
+        carFromDB.setPurchasePrice(car.getPurchasePrice());
+        carFromDB.setContact(car.isContact());
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCar(@PathVariable("id") long id){
+        carRepository.deleteById(id);
     }
 }
